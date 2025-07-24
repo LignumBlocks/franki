@@ -1,0 +1,10 @@
+.env
+.env.enc
+__pycache__/
+*.pyc
+data/parquet/
+user_data/freqai_data/
+*.log
+.dist/
+build/
+node_modules/

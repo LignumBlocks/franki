@@ -1,0 +1,44 @@
+{
+  "max_open_trades": 3,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.99,
+  "fiat_display_currency": "USD",
+  "dry_run": true,
+  "timeframe": "1h",
+  "cancel_open_orders_on_exit": true,
+  "unfilledtimeout": {
+    "buy": 10,
+    "sell": 10
+  },
+  "bid_strategy": {"price_side": "bid", "ask_last_balance": 0.0},
+  "ask_strategy": {"price_side": "ask", "use_order_book": false},
+  "exchange": {
+    "name": "hyperliquid",
+    "key": "${HL_API_KEY}",
+    "secret": "${HL_API_SECRET}",
+    "pair_whitelist": ["BTC/USDT", "ETH/USDT"],
+    "ccxt_config": {},
+    "ccxt_async_config": {}
+  },
+  "telegram": {
+    "enabled": false,
+    "token": "${TELEGRAM_TOKEN}"
+  },
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "0.0.0.0",
+    "listen_port": 8080,
+    "username": "${FREQTRADE_USERNAME}",
+    "password": "${FREQTRADE_PASSWORD}",
+    "cors_origins": ["*"]
+  },
+  "freqai": {
+    "enabled": true,
+    "periodic_retrain": { "walk_forward": 10 },
+    "model_type": "gradient_boosting",
+    "feature_parameters": {
+      "feature_list": ["sentiment_score","tvl_norm","funding_rate_z","oi_change"]
+    }
+  }
+}
