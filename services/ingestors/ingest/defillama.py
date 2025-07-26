@@ -1,38 +1,30 @@
-import asyncio
-import time
+# services/ingestors/ingest/defillama.py
 import aiohttp
-from typing import Dict, Any
+import pandas as pd
+from .base import Ingestor
 
-API_URL = "https://api.llama.fi/chains"   # devuelve TVL actual por cadena
+API_URL = "https://api.llama.fi/chains"
 
-async def fetch_tvl(session: aiohttp.ClientSession, chain: str = "Ethereum") -> Dict[str, Any]:
-    async with session.get(API_URL, timeout=20) as resp:
-        resp.raise_for_status()
-        data = await resp.json()
+class DefiLlamaIngestor(Ingestor):
+    def __init__(self, chain="Ethereum"):
+        self.chain = chain
 
-    # Data es una lista de dicts; filtramos la cadena deseada
-    entry = next((d for d in data if d["name"] == chain), None)
-    if entry is None:
-        raise ValueError(f"Chain {chain} not found in DeFiLlama response")
+    async def fetch(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(API_URL, timeout=15) as resp:
+                resp.raise_for_status()
+                data = await resp.json()
 
-    return {
-        "source": "defillama",
-        "chain": chain,
-        "timestamp": time.time(),
-        "tvl_usd": float(entry["tvl"])
-    }
+        for entry in data:
+            if entry["name"] == self.chain:
+                return {
+                    "chain": self.chain,
+                    "tvl_usd": float(entry["tvl"]),
+                    "timestamp": self.now,
+                    "source": "defillama"
+                }
 
+        raise ValueError(f"Chain {self.chain} not found in DeFiLlama")
 
-async def run(queue, interval: int = 3600, chain: str = "Ethereum"):
-    """
-    Lanza una petición cada `interval` segundos y pone dict en la cola.
-    """
-    async with aiohttp.ClientSession() as session:
-        while True:
-            try:
-                item = await fetch_tvl(session, chain)
-                queue.put_nowait(item)
-                print(f"[defillama] pushed TVL {item['tvl_usd']:.0f} USD")
-            except Exception as e:
-                print(f"[defillama] error: {e}")
-            await asyncio.sleep(interval)
+    def transform(self, raw) -> pd.DataFrame:
+        return pd.DataFrame([raw])
