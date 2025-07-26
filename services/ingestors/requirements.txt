@@ -7,3 +7,4 @@ websockets
 tweepy
 openai
 python-dotenv
+aiohttp

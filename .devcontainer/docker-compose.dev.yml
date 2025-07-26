@@ -1,0 +1,6 @@
+services:
+  ingestors:
+    command: tail -f /dev/null          # contenedor vivo, sin hacer nada
+    volumes:
+      - ../services/ingestors:/app
+      - ../data/parquet:/data/parquet

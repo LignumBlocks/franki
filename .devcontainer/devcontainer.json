@@ -1,0 +1,26 @@
+{
+  "name": "Franki Dev (Ingestors)",
+  // Usa docker compose en lugar de un Dockerfile suelto
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "./docker-compose.dev.yml"          // override solo para dev
+  ],
+  // Contenedor “principal” donde se abrirá VS Code
+  "service": "ingestors",
+  // Abre el workspace en /app (igual que WORKDIR)
+  "workspaceFolder": "/app",
+  // Arranca los servicios indicados al abrir el contenedor
+  "runServices": ["ingestors"],
+  // Ejecuta el comando del compose tal cual (no lo sobrescribas)
+  "overrideCommand": false,
+  // Extensiones recomendadas dentro del contenedor
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}

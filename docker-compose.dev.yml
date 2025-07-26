@@ -1,0 +1,9 @@
+services:
+  ingestors:
+    volumes:
+      - ./services/ingestors:/app          # código con hot-reload
+      - ./data/parquet:/data/parquet
+    command: >
+      bash -c 'pip install --quiet --disable-pip-version-check watchdog &&
+               exec watchmedo auto-restart -d /app -p "*.py" -- python run_all_ingestors.py'
+    restart: "no"

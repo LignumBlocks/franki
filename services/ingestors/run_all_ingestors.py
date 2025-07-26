@@ -1,2 +1,9 @@
+# run_all_ingestors.py  ── ejemplo mínimo
+import time
+
 print("Ingestors placeholder running.")
-# TODO: Implementar llamadas a rss_sentiment(), pytrends_collect(), glassnode_flow(), etc.
+while True:
+    # aquí meterás más adelante la lógica real:
+    #   fetch → calcula → guarda parquet
+    print("Tik-tok… haciendo trabajo de ingesta")
+    time.sleep(300)          # espera 5 min
