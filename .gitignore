@@ -8,3 +8,4 @@ user_data/freqai_data/
 .dist/
 build/
 node_modules/
+.idea/

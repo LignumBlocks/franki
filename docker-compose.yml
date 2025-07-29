@@ -8,7 +8,7 @@ services:
       - ./user_data:/freqtrade/user_data
       - ./data/parquet:/data/parquet
     command: >
-      bash -c "freqtrade trade --config user_data/config.json"
+      trade --config user_data/config.json --strategy ema_super
     restart: unless-stopped
 
   ingestors:
