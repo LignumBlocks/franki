@@ -7,8 +7,7 @@ services:
     volumes:
       - ./user_data:/freqtrade/user_data
       - ./data/parquet:/data/parquet
-    command: >
-      bash -c "freqtrade trade --config user_data/config.json"
+    command: trade --config user_data/config.json
     restart: unless-stopped
 
   ingestors:
