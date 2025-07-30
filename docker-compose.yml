@@ -1,6 +1,6 @@
 services:
   freqtrade:
-    image: freqtradeorg/freqtrade:stable
+    image: freqtradeorg/freqtrade:stable_freqaitorch
     container_name: freqtrade
     env_file:
       - .env
@@ -9,6 +9,8 @@ services:
       - ./data/parquet:/data/parquet
     command: trade --config user_data/config.json
     restart: unless-stopped
+    ports:
+      - "8080:8080"
 
   ingestors:
     build: ./services/ingestors
