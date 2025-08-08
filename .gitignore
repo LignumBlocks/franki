@@ -2,8 +2,8 @@
 .env.enc
 __pycache__/
 *.pyc
-data/parquet/
-user_data/freqai_data/
+user_data/data/
+user_data/models/
 *.log
 .dist/
 build/
