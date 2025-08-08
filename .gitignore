@@ -3,7 +3,6 @@
 __pycache__/
 *.pyc
 user_data/data/
-user_data/models/
 *.log
 .dist/
 build/
