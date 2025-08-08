@@ -1,0 +1,17 @@
+# services/ingestors/Dockerfile
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git ca-certificates curl lz4 && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Requisitos Python (incluye PyYAML)
+COPY requirements.txt /app/requirements.txt
+RUN pip install -r requirements.txt
+
+# Tu orquestador
+COPY run.py /app/run.py
+
+# No definas CMD aquí si ya usas `command:` en docker-compose

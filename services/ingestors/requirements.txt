@@ -1,10 +1,4 @@
+requests
 pandas
 pyarrow
-duckdb
-requests
-feedparser
-websockets
-tweepy
-openai
-python-dotenv
-aiohttp
+pyyaml

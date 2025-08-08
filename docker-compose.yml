@@ -1,26 +1,42 @@
 services:
   freqtrade:
-    image: freqtradeorg/freqtrade:stable_freqaitorch
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: freqtrade
+    restart: unless-stopped
     env_file:
       - .env
     volumes:
       - ./user_data:/freqtrade/user_data
       - ./data/parquet:/data/parquet
-    command: trade --config user_data/config.json
-    restart: unless-stopped
     ports:
       - "8080:8080"
+    command: >
+      trade
+      --datadir /freqtrade/user_data/data/hyperliquid
+      --logfile /freqtrade/user_data/logs/freqtrade.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3.sqlite
+      --config /freqtrade/user_data/config_freqai.example.json
+      --freqaimodel LightGBMRegressor
+      --strategy FreqaiExampleStrategy
+
 
   ingestors:
-    build: ./services/ingestors
+    build:
+      context: ./services/ingestors
+      dockerfile: Dockerfile.ingestor
     container_name: ingestors
     env_file:
       - .env
     volumes:
+      - ./user_data:/freqtrade/user_data
       - ./data/parquet:/data/parquet
-      - ./user_data/freqai_data:/freqai_data
-    command: ["bash","-c","python /app/run_all_ingestors.py"]
+      - type: bind
+        source: ./services/ingestors/run.py   # ← tu script en el host
+        target: /app/run.py                   # ← se “inyecta” en el contenedor
+        read_only: true
+    command: ["bash","-lc","python -u /app/run.py"]
     restart: unless-stopped
 
   dashboard:
@@ -55,3 +71,4 @@ services:
     depends_on:
       - freqtrade
     restart: unless-stopped
+

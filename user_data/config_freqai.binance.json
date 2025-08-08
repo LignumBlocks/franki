@@ -1,0 +1,97 @@
+{
+    "$schema": "https://schema.freqtrade.io/schema.json",
+    "trading_mode": "futures",
+    "margin_mode": "isolated",
+    "timeframe": "1h",
+    "dataformat_ohlcv": "feather",
+    "max_open_trades": 5,
+    "stake_currency": "USDC",
+    "stake_amount": 200,
+    "dry_run": true,
+    "dry_run_wallet": 1000,
+
+    "exchange": {
+        "name": "hyperliquid",
+        "walletAddress": "${HL_WALLET_ADDR}",
+        "privateKey": "${HL_API_PRIVATE_KEY}",
+        "stoploss_on_exchange": true,
+        "leverage":      1,
+        "ccxt_config": {
+            "options": {"vaultAddress": "${HL_VAULT_ADDR}"}
+        },
+        "pair_whitelist": ["BTC/USDC:USDC"],
+        "pair_blacklist": []
+    },
+
+    "pairlists": [
+        {
+            "method": "StaticPairList"
+        }
+    ],
+
+    "freqai": {
+        "enabled": true,
+        "purge_old_models": 2,
+
+        "train_period_days": 30,
+        "backtest_period_days": 7,
+
+        "identifier": "hl-btc-4h",
+
+        "feature_parameters": {
+            "include_timeframes": ["1h"],
+            "include_corr_pairlist": ["BTC/USDC:USDC" ],
+
+            "label_period_candles": 20,
+            "include_shifted_candles": 2,
+            "indicator_periods_candles": [10, 20],
+
+            "use_SVM_to_remove_outliers": true,
+            "principal_component_analysis": false,            
+            "plot_feature_importances": 0
+        },
+
+        "data_split_parameters": {
+            "test_size": 0.33,
+            "random_state": 1
+        },
+        "model_training_parameters": {}
+    },
+
+    "unfilledtimeout": {
+        "entry": 10,
+        "exit": 30
+    },
+
+    "entry_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+
+    "exit_pricing": {
+        "price_side": "other",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+    
+
+    "api_server": {
+        "enabled": true,
+        "listen_ip_address": "0.0.0.0",
+        "listen_port": 8080,
+        "verbosity": "error",
+        "enable_openapi": false,
+        "jwt_secret_key": "somethingrandom",
+        "CORS_origins": ["*"],
+        "username": "freqtrader",
+        "password": "SuperSecurePassword",
+        "ws_token": "secret_ws_t0ken."
+    },
+    "bot_name": "",
+    "force_entry_enable": true,
+    "initial_state": "running",
+    "internals": {
+        "process_throttle_secs": 5
+    }
+}

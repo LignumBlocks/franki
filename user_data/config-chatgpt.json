@@ -1,0 +1,61 @@
+{
+  "strategy": "BasicStrategy",
+
+  "max_open_trades": 3,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.99,
+  "dry_run": true,
+  "timeframe": "1h",
+  "stoploss": -0.1,
+
+  "cancel_open_orders_on_exit": true,
+  "unfilledtimeout": { "entry": 10, "exit": 10 },
+
+  "entry_pricing": { "price_side": "bid", "price_last_balance": 0.0 },
+  "exit_pricing":  { "price_side": "ask", "use_order_book": false },
+  
+  "exchange": {
+    "name": "bybit",
+    "type": "spot",
+    "key": "${BYBIT_API_KEY}",
+    "secret": "${BYBIT_API_SECRET}",
+    "ccxt_config":       { "enableRateLimit": true, "options": { "defaultType": "spot" } },
+    "ccxt_async_config": { "enableRateLimit": true, "options": { "defaultType": "spot" } },
+    "pair_whitelist": ["BTC/USDT", "ETH/USDT"],
+    "pair_blacklist": []
+  },
+  "pairlists": [
+    { "method": "StaticPairList" }
+  ],
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "0.0.0.0",
+    "listen_port": 8080,
+    "username": "admin ",
+    "password": "changeme",
+    "cors_origins": ["*"]
+  },
+  "freqai": {
+    "enabled": true,
+    "freqaimodel": "DefaultFreqaiModel",
+    "periodic_retrain": { "walk_forward": 10 },
+    "model_type": "gradient_boosting",
+
+    "feature_parameters": {
+      "feature_list": ["tvl_norm"],
+      "window_size": 48,
+      "label_period_candles": 12,
+      "label_target": "profit",
+      "future_period_candles": 6,
+      "include_corr_pairlist": [],
+      "include_timeframes": ["1h"],
+      "include_shifted_candles": 0
+    },
+
+    "model_parameters": { "model_string": "xgboost", "epochs": 100 },
+    "training_parameters": { "profit_target": 0.02, "required_score": 0.6 },
+    "data_split_parameters": { "method": "standard", "train_size": 0.8 },
+    "identifier": "example"
+  }
+}

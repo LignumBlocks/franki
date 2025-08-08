@@ -1,0 +1,3 @@
+pairs:
+  - asset: "BTC"
+    ft_pair: "BTC_USDC_USDC"
