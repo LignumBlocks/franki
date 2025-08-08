@@ -1,9 +1,8 @@
 <<<<<<< HEAD
 {"BTC/USDC:USDC":{"model_filename":"cb_btc_1754661247","trained_timestamp":1754661247,"data_path":"/freqtrade/user_data/models/hl-btc-4h/sub-train-BTC_1754661247","extras":{}}}
 =======
-<<<<<<< HEAD
-<<<<<<< HEAD
-{"BTC/USDC:USDC":{"model_filename":"cb_btc_1754661247","trained_timestamp":1754661247,"data_path":"/freqtrade/user_data/models/hl-btc-4h/sub-train-BTC_1754661247","extras":{}}}
+{"BTC/USDC:USDC":{"model_filename":"cb_btc_1754668447","trained_timestamp":1754668447,"data_path":"/freqtrade/user_data/models/hl-btc-4h/sub-train-BTC_1754668447","extras":{}}}
+>>>>>>> eb783c8 (hyperliquid working)
 =======
 {"BTC/USDC:USDC":{"model_filename":"cb_btc_1754668447","trained_timestamp":1754668447,"data_path":"/freqtrade/user_data/models/hl-btc-4h/sub-train-BTC_1754668447","extras":{}}}
 >>>>>>> eb783c8 (hyperliquid working)
