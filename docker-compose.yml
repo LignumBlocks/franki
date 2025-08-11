@@ -11,15 +11,18 @@ services:
       - ./user_data:/freqtrade/user_data
       - ./data/parquet:/data/parquet
     ports:
-      - "8080:8080"
-    command: >
-      trade
-      --datadir /freqtrade/user_data/data/hyperliquid
-      --logfile /freqtrade/user_data/logs/freqtrade.log
-      --db-url sqlite:////freqtrade/user_data/tradesv3.sqlite
-      --config /freqtrade/user_data/config_freqai.example.json
-      --freqaimodel LightGBMRegressor
-      --strategy FreqaiExampleStrategy
+      - "8080:8080"  # LIVE
+      - "8081:8081"  # A
+      - "8082:8082"  # B
+      - "8083:8083"  # D (FreqAI)
+#    command: >
+#      trade
+#      --datadir /freqtrade/user_data/data/hyperliquid
+#      --logfile /freqtrade/user_data/logs/freqtrade.log
+#      --db-url sqlite:////freqtrade/user_data/tradesv3.sqlite
+#      --config /freqtrade/user_data/config_freqai.example.json
+#      --freqaimodel LightGBMRegressor
+#      --strategy FreqaiExampleStrategy
 
 
   ingestors:
@@ -52,23 +55,23 @@ services:
     command: ["bash","-c","streamlit run app.py --server.address=0.0.0.0 --server.port=8501"]
     restart: unless-stopped
 
-  gateway:
-    build: ./services/gateway
-    container_name: gateway
-    env_file:
-      - .env
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./user_data:/freqtrade/user_data
-    restart: unless-stopped
+#  gateway:
+#    build: ./services/gateway
+#    container_name: gateway
+#    env_file:
+#      - .env
+#    ports:
+#      - "8000:8000"
+#    volumes:
+#      - ./user_data:/freqtrade/user_data
+#    restart: unless-stopped
 
-  telegram_bot:
-    build: ./services/chat
-    container_name: telegram_bot
-    env_file:
-      - .env
-    depends_on:
-      - freqtrade
-    restart: unless-stopped
+#  telegram_bot:
+#    build: ./services/chat
+#    container_name: telegram_bot
+#    env_file:
+#      - .env
+#    depends_on:
+#      - freqtrade
+#    restart: unless-stopped
 

@@ -5,5 +5,11 @@ FROM freqtradeorg/freqtrade:stable_freqaitorch
 COPY ../hyperliquid-python-sdk /hyperliquid-python-sdk
 RUN pip install /hyperliquid-python-sdk
 
-# Copiamos tu configuración y estrategias
+# Copia el lanzador multi-instancia y dale permisos
+COPY start.sh /start.sh
+
+# Directorio de trabajo de Freqtrade
 WORKDIR /freqtrade
+
+# El contenedor arrancará el script (no el binario directo)
+ENTRYPOINT ["/start.sh"]

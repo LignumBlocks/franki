@@ -1,0 +1,8 @@
+{
+  "bot_name": "SHADOW_B",
+  "api_server": { "listen_port": 8082 },
+  "dry_run": true,
+  "db_url": "sqlite:////freqtrade/user_data/instances/b/trades.sqlite",
+  "logfile": "/freqtrade/user_data/instances/b/logs/freqtrade.b.log",
+  "strategy": "StrategyB_Rango"
+}

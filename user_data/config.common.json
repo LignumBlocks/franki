@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.freqtrade.io/schema.json",
+  "trading_mode": "futures",
+  "margin_mode": "isolated",
+  "timeframe": "1h",
+  "dataformat_ohlcv": "feather",
+  "max_open_trades": 5,
+  "stake_currency": "USDC",
+  "stake_amount": 200,
+  "dry_run": true,
+  "dry_run_wallet": 1000,
+
+  "exchange": {
+    "name": "hyperliquid",
+    "walletAddress": "${HL_WALLET_ADDR}",
+    "privateKey": "${HL_API_PRIVATE_KEY}",
+    "stoploss_on_exchange": true,
+    "leverage": 1,
+    "ccxt_config": { "options": { "vaultAddress": "${HL_VAULT_ADDR}" } },
+    "_ft_has_params": { "ohlcv_has_history": true, "ohlcv_candle_limit": 5000 },
+    "pair_whitelist": ["BTC/USDC:USDC"],
+    "pair_blacklist": []
+  },
+
+  "pairlists": [{ "method": "StaticPairList" }],
+
+  "unfilledtimeout": { "entry": 10, "exit": 30 },
+  "entry_pricing": { "price_side": "same", "use_order_book": true, "order_book_top": 1 },
+  "exit_pricing": { "price_side": "other", "use_order_book": true, "order_book_top": 1 },
+
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "0.0.0.0",
+    "verbosity": "error",
+    "enable_openapi": false,
+    "jwt_secret_key": "somethingrandom",
+    "CORS_origins": ["*"],
+    "username": "freqtrader",
+    "password": "SuperSecurePassword",
+    "ws_token": "secret_ws_t0ken."
+  },
+
+  "force_entry_enable": true,
+  "initial_state": "running",
+  "internals": { "process_throttle_secs": 5 }
+}
